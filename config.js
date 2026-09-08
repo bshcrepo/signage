@@ -116,7 +116,7 @@ var DISPLAYS = {
   'bldg-c-dining':  { schedule: 'dietary-menu', rotate: 90, location: 'Building C - dining room' },
   'bldg-d-dining':  { schedule: 'dietary-menu', rotate: 90, location: 'Building D - dining room' },
 
-  'bccb-breakroom': { schedule: 'bccb-breakroom', rotate: 270, location: 'BCCB - employee breakroom' }
+  'bccb-breakroom': { schedule: 'bccb-breakroom', rotate: 90, location: 'BCCB - employee breakroom' }
 
   /* Add the remaining screens here, for example:
   ,'bldg-a-lobby':  { schedule: 'lobby-welcome', rotate: 0, location: 'Building A - main lobby' }
