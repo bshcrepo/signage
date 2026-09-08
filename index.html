@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Signage</title>
+<!--
+  Chrome Sign Builder replacement.
+
+  You should not need to edit this file. All content lives in config.js.
+
+  Each kiosk points at this page with its display ID:
+    https://YOURORG.github.io/signage/?id=bldg-a-dining
+
+  The page looks up that display's schedule, picks the deck for today's day
+  of month, and rolls over on its own at midnight. Source decks in Drive are
+  never modified and stay shared with any other displays that use them.
+-->
+<style>
+  html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    background: #000;
+    overflow: hidden;
+  }
+  iframe {
+    display: block;
+    width: 100vw;
+    height: 100vh;
+    border: 0;
+  }
+  #message {
+    display: none;
+    position: absolute;
+    inset: 0;
+    color: #888;
+    background: #000;
+    font: 20px/1.5 system-ui, sans-serif;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    padding: 40px;
+    box-sizing: border-box;
+  }
+</style>
+</head>
+<body>
+
+<iframe id="deck" allowfullscreen title="Signage content"></iframe>
+<div id="message"></div>
+
+<script src="config.js"></script>
+<script>
+(function () {
+  'use strict';
+
+  var frame = document.getElementById('deck');
+  var message = document.getElementById('message');
+  var currentKey = null;
+
+  function fail(text) {
+    frame.style.display = 'none';
+    message.style.display = 'flex';
+    message.textContent = text;
+  }
+
+  function displayId() {
+    var match = /[?&]id=([^&]+)/.exec(window.location.search);
+    return match ? decodeURIComponent(match[1]) : DEFAULT_DISPLAY;
+  }
+
+  function embedUrl(id, delayMs) {
+    return 'https://docs.google.com/presentation/d/e/' + id +
+           '/embed?start=true&loop=true&delayms=' + delayMs;
+  }
+
+  function render() {
+    var id = displayId();
+    var display = DISPLAYS[id];
+
+    if (!display) {
+      fail('Unknown display ID: "' + id + '". Check config.js.');
+      return;
+    }
+
+    var schedule = SCHEDULES[display.schedule];
+
+    if (!schedule) {
+      fail('Display "' + id + '" points at missing schedule "' +
+           display.schedule + '". Check config.js.');
+      return;
+    }
+
+    var day = new Date().getDate();
+    var deckId;
+
+    if (schedule.static) {
+      deckId = schedule.static;
+    } else {
+      deckId = schedule.decks[day] || schedule.decks[1];
+    }
+
+    if (!deckId) {
+      fail('No deck configured for day ' + day + ' of "' +
+           display.schedule + '".');
+      return;
+    }
+
+    // Only touch the iframe when the target actually changes, so the
+    // slideshow is not restarted every time this runs.
+    var key = id + '|' + day + '|' + deckId;
+    if (key === currentKey) return;
+    currentKey = key;
+
+    message.style.display = 'none';
+    frame.style.display = 'block';
+    frame.src = embedUrl(deckId, schedule.delayMs || 10000);
+  }
+
+  render();
+
+  // Rolls the day over at midnight without needing a reboot.
+  setInterval(render, 60000);
+
+  // Hard reload at 3:05am to clear any stale Slides cache and pick up
+  // config.js changes without anyone touching the device.
+  setInterval(function () {
+    var now = new Date();
+    if (now.getHours() === 3 && now.getMinutes() === 5) {
+      window.location.reload(true);
+    }
+  }, 60000);
+})();
+</script>
+
+</body>
+</html>
