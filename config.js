@@ -125,6 +125,36 @@ var SCHEDULES = {
   }
 
   /* -------------------------------------------------------------------------
+     AVAH Employee Breakroom — migrated from its Sign Builder JSON export.
+     Original schedule name: "Looping Slide Display". Single looping deck.
+     ------------------------------------------------------------------------- */
+  ,'avah-breakroom': {
+    label: 'AVAH Employee Breakroom',
+    delayMs: 10000,
+    static: '2PACX-1vQpIisAppL8_y3zkg3c2ZiBwjEmDQWzDac-0L0kKaNW57aSpndF-sa5hHf_UH_0qLCZWWJYHgzI7HwQ'
+  }
+
+  /* -------------------------------------------------------------------------
+     AVAB Employee Breakroom — migrated from its Sign Builder JSON export.
+     Original schedule name: "Looping Slide Display". Single looping deck.
+     ------------------------------------------------------------------------- */
+  ,'avab-breakroom': {
+    label: 'AVAB Employee Breakroom',
+    delayMs: 10000,
+    static: '2PACX-1vTTUdoNzTrCmeNvp8CoWczEtS5iioCfqeDMhCF_yhD3whVqms8bNBPV06ijHvR7O3OB5wY7zhdIRSmf'
+  }
+
+  /* -------------------------------------------------------------------------
+     BCCH Employee Breakroom — migrated from its Sign Builder JSON export.
+     Original schedule name: "Looping Slide Display". Single looping deck.
+     ------------------------------------------------------------------------- */
+  ,'bcch-breakroom': {
+    label: 'BCCH Employee Breakroom',
+    delayMs: 10000,
+    static: '2PACX-1vQ60K1yIii2KL8SYDYjUlYy7qX3nsgiRpLPDwYxTsFPNMD9kWb7Fg7z8i7mtdmxi4Nlmi6Tal9ojy0U'
+  }
+
+  /* -------------------------------------------------------------------------
      To add another schedule, copy one of the blocks above and change the key,
      label, and IDs. There are three shapes, matching the three kinds of Sign
      Builder schedule you had:
@@ -185,7 +215,11 @@ var DISPLAYS = {
 
   'bccb-breakroom': { schedule: 'bccb-breakroom', rotate: 0, location: 'BCCB - employee breakroom' },
 
-  'bccb-activities': { schedule: 'bccb-activities', rotate: 0, location: 'BCCB - activities schedule' }
+  'bccb-activities': { schedule: 'bccb-activities', rotate: 0, location: 'BCCB - activities schedule' },
+
+  'avah-breakroom': { schedule: 'avah-breakroom', rotate: 0, location: 'AVAH - employee breakroom' },
+  'avab-breakroom': { schedule: 'avab-breakroom', rotate: 0, location: 'AVAB - employee breakroom' },
+  'bcch-breakroom': { schedule: 'bcch-breakroom', rotate: 0, location: 'BCCH - employee breakroom' }
 
   /* Add the remaining screens here, for example:
   ,'bldg-a-lobby':  { schedule: 'lobby-welcome', rotate: 0, location: 'Building A - main lobby' }
