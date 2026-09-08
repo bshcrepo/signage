@@ -213,6 +213,63 @@ var SCHEDULES = {
   }
 
   /* -------------------------------------------------------------------------
+     BCCH Dietary Menu — migrated from its Sign Builder JSON export.
+     Original schedule name: "31 Day Schedule".
+
+     Same shape as the BCCB Activities Schedule: ONE published deck holding all
+     31 menus, with each day jumping to a specific slide. Note this is a
+     different structure from the BCCB Dietary Menu, which uses 31 separate
+     Slides files. The two buildings' menus are unrelated and independent.
+
+     Held static rather than looping, matching start=false and loop=false in
+     the original.
+
+     Slide IDs came from the Sign Builder export. Mixed formats (p2, p3, and
+     g359d1c2b438_0_4 style) are normal — Google assigns sequential p-numbers
+     to original slides and generated IDs to ones added later. Note that day 28
+     is p22, not p21; p21 either was deleted or is unused.
+     ------------------------------------------------------------------------- */
+  ,'bcch-dietary': {
+    label: 'BCCH Dietary Menu',
+    hold: true,
+    deck: '2PACX-1vSc7Pom-eavi6Xtzh28olZW48p8iOsa31Dmlnia23R1mE8Bp6IhQnc10ylDbA3paQ',
+    slides: [
+      null,
+      'p2',                // 1st
+      'g3c345d63a4e_1_0',  // 2nd
+      'p3',                // 3rd
+      'p4',                // 4th
+      'p5',                // 5th
+      'p6',                // 6th
+      'p7',                // 7th
+      'p8',                // 8th
+      'p9',                // 9th
+      'p10',               // 10th
+      'p11',               // 11th
+      'p12',               // 12th
+      'p13',               // 13th
+      'g359d1c2b438_0_4',  // 14th
+      'g359d1c2b438_0_15', // 15th
+      'g359d1c2b438_0_28', // 16th
+      'p14',               // 17th
+      'p15',               // 18th
+      'p16',               // 19th
+      'p17',               // 20th
+      'g3f78963f3a3_0_20', // 21st
+      'p18',               // 22nd
+      'g3f78963f3a3_0_10', // 23rd
+      'g3f78963f3a3_0_0',  // 24th
+      'p19',               // 25th
+      'p20',               // 26th
+      'g359087df369_0_9',  // 27th
+      'p22',               // 28th
+      'p23',               // 29th
+      'p24',               // 30th
+      'p25'                // 31st
+    ]
+  }
+
+  /* -------------------------------------------------------------------------
      To add another schedule, copy one of the blocks above and change the key,
      label, and IDs. There are three shapes, matching the three kinds of Sign
      Builder schedule you had:
@@ -278,7 +335,8 @@ var DISPLAYS = {
   'avah-breakroom': { schedule: 'avah-breakroom', rotate: 0, location: 'AVAH - employee breakroom' },
   'avab-breakroom': { schedule: 'avab-breakroom', rotate: 0, location: 'AVAB - employee breakroom' },
   'bcch-breakroom': { schedule: 'bcch-breakroom', rotate: 0, location: 'BCCH - employee breakroom' },
-  'avab-activities': { schedule: 'avab-activities', rotate: 0, location: 'AVAB - activities schedule' }
+  'avab-activities': { schedule: 'avab-activities', rotate: 0, location: 'AVAB - activities schedule' },
+  'bcch-dietary': { schedule: 'bcch-dietary', rotate: 90, location: 'BCCH - dietary menu' }
 
   /* Add the remaining screens here, for example:
   ,'bldg-a-lobby':  { schedule: 'lobby-welcome', rotate: 0, location: 'Building A - main lobby' }
