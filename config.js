@@ -84,15 +84,27 @@ var DISPLAYS = {
        https://YOURORG.github.io/signage/?id=bldg-a-dining
 
      "schedule" must match a key in SCHEDULES above.
-     "location" is a note for you; it is never shown on screen. */
+     "location" is a note for you; it is never shown on screen.
 
-  'bldg-a-dining':  { schedule: 'dietary-menu', location: 'Building A - dining room' },
-  'bldg-b-dining':  { schedule: 'dietary-menu', location: 'Building B - dining room' },
-  'bldg-c-dining':  { schedule: 'dietary-menu', location: 'Building C - dining room' },
-  'bldg-d-dining':  { schedule: 'dietary-menu', location: 'Building D - dining room' }
+     "rotate" turns the picture on screen. Omit it, or use 0, for screens
+     that are already the right way up. Valid values: 0, 90, 180, 270.
+
+       90  = quarter turn clockwise
+       180 = upside down
+       270 = quarter turn counter-clockwise
+
+     If 90 comes out upside down, use 270. This is done in the page rather
+     than in the Admin console, because ChromeOS removed the kiosk screen
+     rotation policy along with Chrome App kiosk support. Doing it here also
+     means portrait and landscape screens can share one organizational unit. */
+
+  'bldg-a-dining':  { schedule: 'dietary-menu', rotate: 90, location: 'Building A - dining room' },
+  'bldg-b-dining':  { schedule: 'dietary-menu', rotate: 90, location: 'Building B - dining room' },
+  'bldg-c-dining':  { schedule: 'dietary-menu', rotate: 90, location: 'Building C - dining room' },
+  'bldg-d-dining':  { schedule: 'dietary-menu', rotate: 90, location: 'Building D - dining room' }
 
   /* Add the remaining screens here, for example:
-  ,'bldg-a-lobby':  { schedule: 'lobby-welcome', location: 'Building A - main lobby' }
+  ,'bldg-a-lobby':  { schedule: 'lobby-welcome', rotate: 0, location: 'Building A - main lobby' }
   */
 };
 
