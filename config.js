@@ -16,7 +16,7 @@ var SCHEDULES = {
      Source decks in Drive: BCCB_Dietary_Menu_1st .. BCCB_Dietary_Menu_31st
      These decks are shared with other displays; do not merge or rename them.
      ------------------------------------------------------------------------- */
-  'bccb-dietary': {
+  'dietary-menu': {
     label: 'BCCB Dietary Menu',
     delayMs: 10000,
     decks: [
@@ -309,7 +309,10 @@ var DISPLAYS = {
      rotation policy along with Chrome App kiosk support. Doing it here also
      means portrait and landscape screens can share one organizational unit. */
 
-  'bccb-dietary':   { schedule: 'bccb-dietary',   rotate: 90, location: 'BCCB - dietary menu' },
+  'bldg-a-dining':  { schedule: 'dietary-menu', rotate: 90, location: 'Building A - dining room' },
+  'bldg-b-dining':  { schedule: 'dietary-menu', rotate: 90, location: 'Building B - dining room' },
+  'bldg-c-dining':  { schedule: 'dietary-menu', rotate: 90, location: 'Building C - dining room' },
+  'bldg-d-dining':  { schedule: 'dietary-menu', rotate: 90, location: 'Building D - dining room' },
 
   'bccb-breakroom': { schedule: 'bccb-breakroom', rotate: 0, location: 'BCCB - employee breakroom' },
 
@@ -328,4 +331,4 @@ var DISPLAYS = {
 
 
 // Used when a display ID is missing or unrecognized in the URL.
-var DEFAULT_DISPLAY = 'bccb-dietary';
+var DEFAULT_DISPLAY = 'bldg-a-dining';
