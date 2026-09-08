@@ -121,14 +121,15 @@
     var base = 'https://docs.google.com/presentation/d/e/';
 
     // Type 3: one deck, a specific slide per day, held static.
-    // Slide is passed both as a query parameter and as a hash fragment.
-    // Sign Builder used the query form, which is what worked reliably here;
-    // the hash is a harmless fallback for viewer versions that prefer it.
+    // Must use /embed, not /pub — Google sends X-Frame-Options on /pub, so it
+    // cannot be iframed. Sign Builder loaded /pub directly rather than in a
+    // frame, which is why its URLs are not reusable verbatim here.
+    // Slide is passed as both a query parameter and a hash fragment.
     if (schedule.deck && schedule.slides) {
       var slideId = schedule.slides[day] || schedule.slides[1];
       if (!slideId) return null;
       return base + schedule.deck +
-             '/pub?start=false&loop=false&delayms=86400000' +
+             '/embed?start=false&loop=false&delayms=86400000' +
              '&slide=id.' + slideId +
              '#slide=id.' + slideId;
     }
