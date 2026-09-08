@@ -155,6 +155,64 @@ var SCHEDULES = {
   }
 
   /* -------------------------------------------------------------------------
+     AVAB Activities Schedule — migrated from its Sign Builder JSON export.
+     Original schedule name: "30 Day Schedule".
+
+     A different published deck each day, like the dietary menu, but held
+     static rather than looping (start=false, loop=false in the original),
+     hence "hold: true".
+
+     Note on the original: Sign Builder could only express days 1-30 as a
+     monthly repeat, so the 31st was faked with a pile of one-off entries,
+     one per calendar 31st, each given an end date out in 2030. All of them
+     pointed at the same deck. That deck is simply position 31 below, and the
+     one-off entries are no longer needed. Several redundant day-30 one-offs
+     were discarded for the same reason.
+
+     The original also had an unused defaultUrl deck
+     (2PACX-1vT7qMlJpW5fUtU9jaRn9CMqna-0gQ5mbSQSX88wLT95lJlztZqpKV85zL9ZP1kacnoCVHO0HvXy8wwI)
+     that never displayed, because all 31 days were covered. Not carried over.
+     ------------------------------------------------------------------------- */
+  ,'avab-activities': {
+    label: 'AVAB Activities Schedule',
+    hold: true,
+    decks: [
+      null,
+      '2PACX-1vQEzaPIq0tF3WtrvymgPypa6PYHTsZKr4Bf91c0v8ebsTa04SEPaAEFkzjzfd4SIYoIzrthxOZR-PPw', // 1st
+      '2PACX-1vQk6R7i7M93zwRQXEFn46HIfAPDL-oXyB4RwPxnBDiCeHv-0R2tutgdKOLsSPGtXgEUwE5RP9VMWQCs', // 2nd
+      '2PACX-1vQhGCr0dXeoqM-9t715DZBgbA6Wo18Vt7_crsLRmLTHyUfKHUL_Ej3EggoOkd9Ey_FrbmzB22KWw6US', // 3rd
+      '2PACX-1vSpCONJy--a3H7R7XMU1_RE7UsAhFlZV0umf-oufE6g3UHXv5YDHSPyooaQose0StI71DbwQ1znvhVm', // 4th
+      '2PACX-1vTY1h8AEgdh_1WpsLJTGBdAjuGq92fEEjy6Oo_02iLRJ16QjI_v-wT92oMyv7PfIZiFE32fUiQMWBZN', // 5th
+      '2PACX-1vSBJO_NFtS8bXgv6S1ggozvAbO4Yo0CtwBNuUdqETaScPRqHyMqrKWb3US4G5Wl3LRYJQ92OZfzQSpC', // 6th
+      '2PACX-1vRo_AUBj8T4MXlS4mShvYcI3d8FLl76OEkzrqxQrR-ZFn3BvW1c1a1AU9SLMkxKjlhuUgQup6JYP4Ae', // 7th
+      '2PACX-1vR4dq-V6t3340hi1z9Rj2MaMZPzqJthYNZ4fIbWESGQjUah2E9AIHXRwYSzdg-J6qPPMAbWkiKpf-9Z', // 8th
+      '2PACX-1vSbKz80zAVWFjXW9SCCxF4vaNBilJ8Ool1i-D8cvfaUInbW9i6oJBdVgYUUZSJcoH7MfNqZ9EnfaKJQ', // 9th
+      '2PACX-1vQH55ScnJIyFW7KfRmHZyHKg5kJ-E_G90u56MOD3CoaIZu3BW6tuLFqJKVyjF7vyOo0EyFFjQHSdfqs', // 10th
+      '2PACX-1vRJ4tL7ZOott4QCg7z6igWZb02gSBaSWNrSef1LRCsmqmzazlIdSjGhLmnTSBd-nfjI0oFN75z1re2I', // 11th
+      '2PACX-1vSE6VRT_qUUq-0b1-2UPhOUxwj3yzLkKgPDRNTKUlUoIMzx-9ELLvD2dCt8EFIbumkWOWbAw-QYwRy2', // 12th
+      '2PACX-1vRFxiZX8QZW-r6xICggk_wRWLyMo5qdmB1w0LbQE-AkbDIZiu9fBSaALIEz5PTPd7gfTH0PpeouhN0p', // 13th
+      '2PACX-1vRWw-tRw467VBLR_TvxbejxbphdVqO_HXFCIdIbTIpE1QHqPMitnAiqB82u_nCl8cPyGo5Mp2irT8mK', // 14th
+      '2PACX-1vR1u4Ry7Vr2B0aOsBtQAD6pf_5adMue84pWFFH4JoS_XZ8fz5gv8oAUozFY8jHj3rs4fYies4Seawny', // 15th
+      '2PACX-1vT3PZv5hayDeFVrG_Y2XUCNL2iCF2qjEApWoqaR9GuoKbtC9Xr7gP3uUvxlURS3sR33ZAu97wATMbRl', // 16th
+      '2PACX-1vSbwzU2wPWUKQWVcKmm1aGwq4Ho_cuzceylQ1ahPAMdbRqk03lsQAKqI4ViDnhmFoUtILUfai9AzTHS', // 17th
+      '2PACX-1vSVrvAefkDShY9U6PCGeXwV9WsoyNOWuCriRFhTj8bNT0MFOSrdw-FVvxW7XoPnjAj4ccGPdTCG2Be_', // 18th
+      '2PACX-1vR7TkTJC_Vv_QrssL0C50QwuVBU8YwWBnsC9pSt_bHTFg_KNfjvF9EgTjpP1z0GBzZvQOG11ufDgsVD', // 19th
+      '2PACX-1vRYs3m5CYCpOn7OEZn4fSprGvffgrBwWv4xRPIgg2ne-djTRimo4n-wso4VHoe2vhKAQSYskGa0SNjH', // 20th
+      '2PACX-1vT8RuTw0A0THhHgiBDvSBeaIVDo3gyq2D1oKbNjkHT7nMp7keRjBxC3zdeVjs5Bn1wzItQCvcgXe-LS', // 21st
+      '2PACX-1vR33VgYuSx72xoPS8upna4aX8kHEHJPAuGW_NCO4zBWNXA1o6rMiLAtEI_3vJODr1wgl1eKaqQ-AKud', // 22nd
+      '2PACX-1vR_7hbWjnNIzfxpsza2oEaISYFrhFRRFJ5yvbKugmqmPTol1vPOgUzIUGEW4Tfbe7i7OVNk_xhk8pXa', // 23rd
+      '2PACX-1vS60RW051K7y2JpAxO9rTujp1BlHrStmstC1tSIt4vKR-YTSbdhuxftyFULKV8gTSPtd28ab8c2v7m5', // 24th
+      '2PACX-1vSKKtjm6ic9wIq5vwmtYVD8oQmuLJGkra28Jdg8YM_dOvUr2aLvg0lx5jwUrLoQdMebC5eqt5We9HgR', // 25th
+      '2PACX-1vTd_jiGssoM7POB_5mH4dMX6XkJocz1ZIAwn3h7ELr3HDd0nkPwR-8EOx0nPRv1hlgkXvF8Sp7oPOz1', // 26th
+      '2PACX-1vQkS4y2fUHnJQjK_ijcVI2sufeZn6hNu5mjwWoSwlMX_nO-3UYiq6sz7ElWm1PoSgT5ydehqS3vcoTQ', // 27th
+      '2PACX-1vQWQNe8Yv_yQlOQwyFVACuyEbympBxzTUDA2gQqkC_QtrzziBn_r0Tj1xVRYtwS75hXUKi7swoRNRGl', // 28th
+      '2PACX-1vQZRPxzxxdFdWrMxqnm-PVsfUIKFOmBb7W0rE5sOi3MmDe5H5ZfKxEVM4cazforKMJ7YZZ0gw0ffxOr', // 29th
+      '2PACX-1vTFkSzz7-ih3DaTRDv0P3BnfA0qWRk1TgpLaEstjrAzXlve3Qs0ENddgCjvZGZIo0pczZ9ysxT_vPDH', // 30th
+      '2PACX-1vRXig2_OhcsvZh_sr5htLbOhS0-q4hieKappVax6PT_NXNm2qpy_I_BS2OvLIAUezWty3thmw_xxTCK'  // 31st
+    ]
+  }
+
+  /* -------------------------------------------------------------------------
      To add another schedule, copy one of the blocks above and change the key,
      label, and IDs. There are three shapes, matching the three kinds of Sign
      Builder schedule you had:
@@ -219,7 +277,8 @@ var DISPLAYS = {
 
   'avah-breakroom': { schedule: 'avah-breakroom', rotate: 0, location: 'AVAH - employee breakroom' },
   'avab-breakroom': { schedule: 'avab-breakroom', rotate: 0, location: 'AVAB - employee breakroom' },
-  'bcch-breakroom': { schedule: 'bcch-breakroom', rotate: 0, location: 'BCCH - employee breakroom' }
+  'bcch-breakroom': { schedule: 'bcch-breakroom', rotate: 0, location: 'BCCH - employee breakroom' },
+  'avab-activities': { schedule: 'avab-activities', rotate: 0, location: 'AVAB - activities schedule' }
 
   /* Add the remaining screens here, for example:
   ,'bldg-a-lobby':  { schedule: 'lobby-welcome', rotate: 0, location: 'Building A - main lobby' }
