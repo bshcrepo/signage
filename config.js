@@ -213,7 +213,7 @@ var DISPLAYS = {
   'bldg-c-dining':  { schedule: 'dietary-menu', rotate: 90, location: 'Building C - dining room' },
   'bldg-d-dining':  { schedule: 'dietary-menu', rotate: 90, location: 'Building D - dining room' },
 
-  'bccb-breakroom': { schedule: 'bccb-breakroom', rotate: 90, location: 'BCCB - employee breakroom' },
+  'bccb-breakroom': { schedule: 'bccb-breakroom', rotate: 0, location: 'BCCB - employee breakroom' },
 
   'bccb-activities': { schedule: 'bccb-activities', rotate: 0, location: 'BCCB - activities schedule' },
 
