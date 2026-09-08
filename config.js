@@ -68,24 +68,91 @@ var SCHEDULES = {
   }
 
   /* -------------------------------------------------------------------------
+     BCCB Activities Schedule — migrated from its Sign Builder JSON export.
+     Original schedule name: "31 Day Schedule".
+
+     Different shape from the dietary menu. This is ONE published deck with 31
+     slides inside it; each day jumps to a specific slide rather than loading a
+     different file. Uses "deck" plus "slides" for that reason.
+
+     The slide IDs came from the Sign Builder export. If someone deletes and
+     recreates a slide in this deck, its ID changes and that day falls back to
+     the first slide. To get a slide's ID, open it in the editor and copy the
+     part of the URL after "#slide=id.".
+
+     Also note: this one does not auto-advance. Sign Builder held a single
+     static slide all day (start=false, loop=false), so "hold: true" below
+     reproduces that.
+     ------------------------------------------------------------------------- */
+  ,'bccb-activities': {
+    label: 'BCCB Activities Schedule',
+    hold: true,
+    deck: '2PACX-1vTd4VP8_C9NKBb5K36w4wZTfwGXw0feJ_ARf1UJSrAooNh2fYQnzqO_-X-rVJtLhjFBti__FS6ynENP',
+    slides: [
+      null,
+      'g33d7be9ac1a_0_37',   // 1st
+      'g33d7be9ac1a_0_1342', // 2nd
+      'g33d7be9ac1a_0_1351', // 3rd
+      'g33d7be9ac1a_0_1360', // 4th
+      'g33d7be9ac1a_0_1369', // 5th
+      'g33d7be9ac1a_0_1378', // 6th
+      'g33d7be9ac1a_0_1387', // 7th
+      'g33d7be9ac1a_0_1396', // 8th
+      'g33d7be9ac1a_0_1405', // 9th
+      'g33d7be9ac1a_0_1414', // 10th
+      'g33d7be9ac1a_0_1423', // 11th
+      'g33d7be9ac1a_0_1432', // 12th
+      'g33d7be9ac1a_0_1441', // 13th
+      'g33d7be9ac1a_0_1450', // 14th
+      'g33d7be9ac1a_0_1459', // 15th
+      'g33d7be9ac1a_0_1468', // 16th
+      'g33d7be9ac1a_0_1477', // 17th
+      'g33d7be9ac1a_0_1486', // 18th
+      'g33d7be9ac1a_0_1495', // 19th
+      'g33d7be9ac1a_0_1504', // 20th
+      'g33d7be9ac1a_0_1513', // 21st
+      'g33d7be9ac1a_0_1522', // 22nd
+      'g33d7be9ac1a_0_1531', // 23rd
+      'g33d7be9ac1a_0_1540', // 24th
+      'g33d7be9ac1a_0_1549', // 25th
+      'g33d7be9ac1a_0_1558', // 26th
+      'g33d7be9ac1a_0_1567', // 27th
+      'g33d7be9ac1a_0_1576', // 28th
+      'g33d7be9ac1a_0_1585', // 29th
+      'g33d7be9ac1a_0_1594', // 30th
+      'g33d7be9ac1a_0_1603'  // 31st
+    ]
+  }
+
+  /* -------------------------------------------------------------------------
      To add another schedule, copy one of the blocks above and change the key,
-     label, and deck IDs. A deck ID is the 2PACX-... portion of a deck's
-     "Publish to web" link.
+     label, and IDs. There are three shapes, matching the three kinds of Sign
+     Builder schedule you had:
 
-     31-day rotation (like the dietary menu):
+     1. A different published deck each day (like the dietary menu):
 
-  ,'activities-calendar': {
-    label: 'Activities Calendar',
+  ,'example-a': {
+    label: 'Example',
     delayMs: 10000,
     decks: [ null, 'PASTE_1st', 'PASTE_2nd', ... 'PASTE_31st' ]
   }
 
-     Single deck every day (like the breakroom):
+     2. One published deck, looping all day, every day (like the breakroom):
 
-  ,'lobby-welcome': {
-    label: 'Lobby Welcome Loop',
+  ,'example-b': {
+    label: 'Example',
     delayMs: 10000,
     static: 'PASTE_DECK_ID'
+  }
+
+     3. One published deck, a different slide each day, held static
+        (like the activities schedule):
+
+  ,'example-c': {
+    label: 'Example',
+    hold: true,
+    deck: 'PASTE_DECK_ID',
+    slides: [ null, 'PASTE_1st', 'PASTE_2nd', ... 'PASTE_31st' ]
   }
      ------------------------------------------------------------------------- */
 };
@@ -116,7 +183,9 @@ var DISPLAYS = {
   'bldg-c-dining':  { schedule: 'dietary-menu', rotate: 90, location: 'Building C - dining room' },
   'bldg-d-dining':  { schedule: 'dietary-menu', rotate: 90, location: 'Building D - dining room' },
 
-  'bccb-breakroom': { schedule: 'bccb-breakroom', rotate: 0, location: 'BCCB - employee breakroom' }
+  'bccb-breakroom': { schedule: 'bccb-breakroom', rotate: 0, location: 'BCCB - employee breakroom' },
+
+  'bccb-activities': { schedule: 'bccb-activities', rotate: 0, location: 'BCCB - activities schedule' }
 
   /* Add the remaining screens here, for example:
   ,'bldg-a-lobby':  { schedule: 'lobby-welcome', rotate: 0, location: 'Building A - main lobby' }

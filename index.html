@@ -117,9 +117,29 @@
     return match ? decodeURIComponent(match[1]) : DEFAULT_DISPLAY;
   }
 
-  function embedUrl(id, delayMs) {
-    return 'https://docs.google.com/presentation/d/e/' + id +
-           '/embed?start=true&loop=true&delayms=' + delayMs;
+  function embedUrl(schedule, day) {
+    var base = 'https://docs.google.com/presentation/d/e/';
+
+    // Type 3: one deck, a specific slide per day, held static.
+    if (schedule.deck && schedule.slides) {
+      var slideId = schedule.slides[day] || schedule.slides[1];
+      if (!slideId) return null;
+      return base + schedule.deck +
+             '/embed?start=false&loop=false&delayms=60000' +
+             '#slide=id.' + slideId;
+    }
+
+    // Type 2: one deck, looping all day, every day.
+    // Type 1: a different deck each day.
+    var deckId = schedule.static || (schedule.decks && (schedule.decks[day] || schedule.decks[1]));
+    if (!deckId) return null;
+
+    if (schedule.hold) {
+      return base + deckId + '/embed?start=false&loop=false&delayms=60000';
+    }
+
+    return base + deckId +
+           '/embed?start=true&loop=true&delayms=' + (schedule.delayMs || 10000);
   }
 
   function applyRotation(degrees) {
@@ -145,24 +165,24 @@
     }
 
     var day = new Date().getDate();
-    var deckId = schedule.static || schedule.decks[day] || schedule.decks[1];
+    var url = embedUrl(schedule, day);
 
-    if (!deckId) {
-      fail('No deck configured for day ' + day + ' of "' +
+    if (!url) {
+      fail('No content configured for day ' + day + ' of "' +
            display.schedule + '".');
       return;
     }
 
     // Only touch the iframe when the target actually changes, so the
     // slideshow is not restarted every time this runs.
-    var key = id + '|' + day + '|' + deckId + '|' + display.rotate;
+    var key = id + '|' + url + '|' + display.rotate;
     if (key === currentKey) return;
     currentKey = key;
 
     message.style.display = 'none';
     stage.style.display = 'block';
     applyRotation(display.rotate || 0);
-    frame.src = embedUrl(deckId, schedule.delayMs || 10000);
+    frame.src = url;
   }
 
   render();
