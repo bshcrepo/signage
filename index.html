@@ -121,16 +121,19 @@
     var base = 'https://docs.google.com/presentation/d/e/';
 
     // Type 3: one deck, a specific slide per day, held static.
-    // Must use /embed, not /pub — Google sends X-Frame-Options on /pub, so it
-    // cannot be iframed. Sign Builder loaded /pub directly rather than in a
-    // frame, which is why its URLs are not reusable verbatim here.
-    // Slide is passed as both a query parameter and a hash fragment.
+    //
+    // Must use /embed. Google sends X-Frame-Options on /pub, so /pub cannot be
+    // iframed at all — it fails with "refused to connect". Sign Builder loaded
+    // /pub directly rather than in a frame, which is why the URLs in the old
+    // Sign Builder config cannot be reused verbatim here.
+    //
+    // Slide is targeted with a hash fragment only. Adding &slide= as a query
+    // parameter was tried and is not needed.
     if (schedule.deck && schedule.slides) {
       var slideId = schedule.slides[day] || schedule.slides[1];
       if (!slideId) return null;
       return base + schedule.deck +
-             '/embed?start=false&loop=false&delayms=86400000' +
-             '&slide=id.' + slideId +
+             '/embed?start=false&loop=false&delayms=60000' +
              '#slide=id.' + slideId;
     }
 
