@@ -56,9 +56,23 @@ var SCHEDULES = {
   }
 
   /* -------------------------------------------------------------------------
-     To add another schedule, copy the block above and change the key, label,
-     and deck IDs. A deck ID is the 2PACX-... portion of a deck's
-     "Publish to web" link. Example skeleton:
+     BCCB Employee Breakroom — migrated from its Sign Builder JSON export.
+     Original schedule name: "Looping Slide Display".
+     A single deck that runs every day, with no date rotation. Uses "static"
+     rather than "decks" for that reason.
+     ------------------------------------------------------------------------- */
+  ,'bccb-breakroom': {
+    label: 'BCCB Employee Breakroom',
+    delayMs: 10000,
+    static: '2PACX-1vRKwwZ76yYxzFgVRBdbd07RzpPuQj_biFqGSZpCzAxtb5Ux1z7drxQmOgN-w4waMbKIkTQsDe4qvX_J'
+  }
+
+  /* -------------------------------------------------------------------------
+     To add another schedule, copy one of the blocks above and change the key,
+     label, and deck IDs. A deck ID is the 2PACX-... portion of a deck's
+     "Publish to web" link.
+
+     31-day rotation (like the dietary menu):
 
   ,'activities-calendar': {
     label: 'Activities Calendar',
@@ -66,8 +80,7 @@ var SCHEDULES = {
     decks: [ null, 'PASTE_1st', 'PASTE_2nd', ... 'PASTE_31st' ]
   }
 
-     A schedule can also be a SINGLE deck that runs every day — set
-     "static" instead of "decks":
+     Single deck every day (like the breakroom):
 
   ,'lobby-welcome': {
     label: 'Lobby Welcome Loop',
@@ -101,7 +114,9 @@ var DISPLAYS = {
   'bldg-a-dining':  { schedule: 'dietary-menu', rotate: 90, location: 'Building A - dining room' },
   'bldg-b-dining':  { schedule: 'dietary-menu', rotate: 90, location: 'Building B - dining room' },
   'bldg-c-dining':  { schedule: 'dietary-menu', rotate: 90, location: 'Building C - dining room' },
-  'bldg-d-dining':  { schedule: 'dietary-menu', rotate: 90, location: 'Building D - dining room' }
+  'bldg-d-dining':  { schedule: 'dietary-menu', rotate: 90, location: 'Building D - dining room' },
+
+  'bccb-breakroom': { schedule: 'bccb-breakroom', rotate: 90, location: 'BCCB - employee breakroom' }
 
   /* Add the remaining screens here, for example:
   ,'bldg-a-lobby':  { schedule: 'lobby-welcome', rotate: 0, location: 'Building A - main lobby' }
