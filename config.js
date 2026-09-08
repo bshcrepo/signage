@@ -16,7 +16,7 @@ var SCHEDULES = {
      Source decks in Drive: BCCB_Dietary_Menu_1st .. BCCB_Dietary_Menu_31st
      These decks are shared with other displays; do not merge or rename them.
      ------------------------------------------------------------------------- */
-  'dietary-menu': {
+  'bccb-dietary': {
     label: 'BCCB Dietary Menu',
     delayMs: 10000,
     decks: [
@@ -216,57 +216,31 @@ var SCHEDULES = {
      BCCH Dietary Menu — migrated from its Sign Builder JSON export.
      Original schedule name: "31 Day Schedule".
 
-     Same shape as the BCCB Activities Schedule: ONE published deck holding all
-     31 menus, with each day jumping to a specific slide. Note this is a
+     ONE published deck holding all 31 menus, one slide per day. Note this is a
      different structure from the BCCB Dietary Menu, which uses 31 separate
      Slides files. The two buildings' menus are unrelated and independent.
 
+     Uses "slideCount" rather than a list of slide IDs: slide POSITION is the
+     day of month. Slide 1 is the 1st, slide 31 is the 31st. Nothing to keep in
+     sync, and it survives slides being edited.
+
+     IMPORTANT: slide order is load-bearing. Reordering slides in this deck
+     silently shifts every day after the one that moved.
+
+     History worth knowing: the original deck was an uploaded PowerPoint
+     (.pptx) file. Google's embed viewer rendered it letterboxed and rotated
+     regardless of settings. Converting it to native Google Slides via
+     File > Save as Google Slides fixed it. If a future sign renders as a small
+     sideways box, check the file type first.
+
      Held static rather than looping, matching start=false and loop=false in
      the original.
-
-     Slide IDs came from the Sign Builder export. Mixed formats (p2, p3, and
-     g359d1c2b438_0_4 style) are normal — Google assigns sequential p-numbers
-     to original slides and generated IDs to ones added later. Note that day 28
-     is p22, not p21; p21 either was deleted or is unused.
      ------------------------------------------------------------------------- */
   ,'bcch-dietary': {
     label: 'BCCH Dietary Menu',
     hold: true,
-    deck: '2PACX-1vSc7Pom-eavi6Xtzh28olZW48p8iOsa31Dmlnia23R1mE8Bp6IhQnc10ylDbA3paQ',
-    slides: [
-      null,
-      'p2',                // 1st
-      'g3c345d63a4e_1_0',  // 2nd
-      'p3',                // 3rd
-      'p4',                // 4th
-      'p5',                // 5th
-      'p6',                // 6th
-      'p7',                // 7th
-      'p8',                // 8th
-      'p9',                // 9th
-      'p10',               // 10th
-      'p11',               // 11th
-      'p12',               // 12th
-      'p13',               // 13th
-      'g359d1c2b438_0_4',  // 14th
-      'g359d1c2b438_0_15', // 15th
-      'g359d1c2b438_0_28', // 16th
-      'p14',               // 17th
-      'p15',               // 18th
-      'p16',               // 19th
-      'p17',               // 20th
-      'g3f78963f3a3_0_20', // 21st
-      'p18',               // 22nd
-      'g3f78963f3a3_0_10', // 23rd
-      'g3f78963f3a3_0_0',  // 24th
-      'p19',               // 25th
-      'p20',               // 26th
-      'g359087df369_0_9',  // 27th
-      'p22',               // 28th
-      'p23',               // 29th
-      'p24',               // 30th
-      'p25'                // 31st
-    ]
+    deck: '2PACX-1vRNJsrEF-GVZo1EwH8whughknqyKQ8K5IWEiJUrUu75vVBBoXJl2n6jmAkqFTwy3cA4mLkzUrEBGcrm',
+    slideCount: 31
   }
 
   /* -------------------------------------------------------------------------
@@ -290,10 +264,22 @@ var SCHEDULES = {
     static: 'PASTE_DECK_ID'
   }
 
-     3. One published deck, a different slide each day, held static
-        (like the activities schedule):
+     3. One published deck, a different slide each day, held static, where
+        slide POSITION is the day of month (like the BCCH dietary menu).
+        Preferred when the slides are in day order — nothing to maintain:
 
   ,'example-c': {
+    label: 'Example',
+    hold: true,
+    deck: 'PASTE_DECK_ID',
+    slideCount: 31
+  }
+
+     4. Same, but slides are NOT in day order, so each day names its slide by
+        ID (like the BCCB activities schedule). Use only when necessary; slide
+        IDs change if a slide is deleted and recreated:
+
+  ,'example-d': {
     label: 'Example',
     hold: true,
     deck: 'PASTE_DECK_ID',
@@ -306,7 +292,7 @@ var SCHEDULES = {
 var DISPLAYS = {
 
   /* One entry per physical screen. The key is what goes in the kiosk URL:
-       https://YOURORG.github.io/signage/?id=bldg-a-dining
+       https://YOURORG.github.io/signage/?id=bccb-dietary
 
      "schedule" must match a key in SCHEDULES above.
      "location" is a note for you; it is never shown on screen.
@@ -323,10 +309,7 @@ var DISPLAYS = {
      rotation policy along with Chrome App kiosk support. Doing it here also
      means portrait and landscape screens can share one organizational unit. */
 
-  'bldg-a-dining':  { schedule: 'dietary-menu', rotate: 90, location: 'Building A - dining room' },
-  'bldg-b-dining':  { schedule: 'dietary-menu', rotate: 90, location: 'Building B - dining room' },
-  'bldg-c-dining':  { schedule: 'dietary-menu', rotate: 90, location: 'Building C - dining room' },
-  'bldg-d-dining':  { schedule: 'dietary-menu', rotate: 90, location: 'Building D - dining room' },
+  'bccb-dietary':   { schedule: 'bccb-dietary',   rotate: 90, location: 'BCCB - dietary menu' },
 
   'bccb-breakroom': { schedule: 'bccb-breakroom', rotate: 0, location: 'BCCB - employee breakroom' },
 
@@ -336,13 +319,13 @@ var DISPLAYS = {
   'avab-breakroom': { schedule: 'avab-breakroom', rotate: 0, location: 'AVAB - employee breakroom' },
   'bcch-breakroom': { schedule: 'bcch-breakroom', rotate: 0, location: 'BCCH - employee breakroom' },
   'avab-activities': { schedule: 'avab-activities', rotate: 0, location: 'AVAB - activities schedule' },
-  'bcch-dietary': { schedule: 'bcch-dietary', rotate: 0, location: 'BCCH - dietary menu' }
+  'bcch-dietary': { schedule: 'bcch-dietary', rotate: 90, location: 'BCCH - dietary menu' }
 
   /* Add the remaining screens here, for example:
-  ,'bldg-a-lobby':  { schedule: 'lobby-welcome', rotate: 0, location: 'Building A - main lobby' }
+  ,'avab-lobby':    { schedule: 'some-schedule', rotate: 0, location: 'AVAB - main lobby' }
   */
 };
 
 
 // Used when a display ID is missing or unrecognized in the URL.
-var DEFAULT_DISPLAY = 'bldg-a-dining';
+var DEFAULT_DISPLAY = 'bccb-dietary';

@@ -120,21 +120,31 @@
   function embedUrl(schedule, day) {
     var base = 'https://docs.google.com/presentation/d/e/';
 
-    // Type 3: one deck, a specific slide per day, held static.
+    // Types 3 and 4: one deck, a specific slide per day, held static.
     //
     // Must use /embed. Google sends X-Frame-Options on /pub, so /pub cannot be
     // iframed at all — it fails with "refused to connect". Sign Builder loaded
     // /pub directly rather than in a frame, which is why the URLs in the old
     // Sign Builder config cannot be reused verbatim here.
     //
-    // Slide is targeted with a hash fragment only. Adding &slide= as a query
-    // parameter was tried and is not needed.
-    if (schedule.deck && schedule.slides) {
-      var slideId = schedule.slides[day] || schedule.slides[1];
-      if (!slideId) return null;
+    // Two ways to name the slide:
+    //   slideCount  slide POSITION is the day of month. Preferred.
+    //   slides[]    each day names its slide by object ID. Use when the
+    //               slides are not in day order.
+    if (schedule.deck && (schedule.slides || schedule.slideCount)) {
+      var anchor;
+
+      if (schedule.slideCount) {
+        var pos = (day <= schedule.slideCount) ? day : schedule.slideCount;
+        anchor = 'p' + pos;
+      } else {
+        anchor = schedule.slides[day] || schedule.slides[1];
+      }
+
+      if (!anchor) return null;
       return base + schedule.deck +
              '/embed?start=false&loop=false&delayms=60000' +
-             '#slide=id.' + slideId;
+             '#slide=id.' + anchor;
     }
 
     // Type 2: one deck, looping all day, every day.
