@@ -240,7 +240,40 @@ var SCHEDULES = {
     label: 'BCCH Dietary Menu',
     hold: true,
     deck: '2PACX-1vRNJsrEF-GVZo1EwH8whughknqyKQ8K5IWEiJUrUu75vVBBoXJl2n6jmAkqFTwy3cA4mLkzUrEBGcrm',
-    slideCount: 31
+    slides: [
+      null,
+      'p2',                // 1st
+      'g3c345d63a4e_1_0',  // 2nd
+      'p3',                // 3rd
+      'p4',                // 4th
+      'p5',                // 5th
+      'p6',                // 6th
+      'p7',                // 7th
+      'p8',                // 8th
+      'p9',                // 9th
+      'p10',               // 10th
+      'p11',               // 11th
+      'p12',               // 12th
+      'p13',               // 13th
+      'g359d1c2b438_0_4',  // 14th
+      'g359d1c2b438_0_15', // 15th
+      'g359d1c2b438_0_28', // 16th
+      'p14',               // 17th
+      'p15',               // 18th
+      'p16',               // 19th
+      'p17',               // 20th
+      'g3f78963f3a3_0_20', // 21st
+      'p18',               // 22nd
+      'g3f78963f3a3_0_10', // 23rd
+      'g3f78963f3a3_0_0',  // 24th
+      'p19',               // 25th
+      'p20',               // 26th
+      'g359087df369_0_9',  // 27th
+      'p22',               // 28th
+      'p23',               // 29th
+      'p24',               // 30th
+      'p25'                // 31st
+    ]
   }
 
   /* -------------------------------------------------------------------------
