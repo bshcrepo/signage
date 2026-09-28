@@ -355,7 +355,8 @@ var DISPLAYS = {
   'avab-breakroom': { schedule: 'avab-breakroom', rotate: 0, location: 'AVAB - employee breakroom' },
   'bcch-breakroom': { schedule: 'bcch-breakroom', rotate: 0, location: 'BCCH - employee breakroom' },
   'avab-activities': { schedule: 'avab-activities', rotate: 0, location: 'AVAB - activities schedule' },
-  'bcch-dietary': { schedule: 'bcch-dietary', rotate: 0, location: 'BCCH - dietary menu' }
+   'bcch-dietary': { schedule: 'bcch-dietary', rotate: 0, location: 'BCCH - dietary menu' },
+  'bcch-dietary-2': { schedule: 'bcch-dietary', rotate: 90, location: 'BCCH - dietary menu, second screen' }
 
   /* Add the remaining screens here, for example:
   ,'avab-lobby':    { schedule: 'some-schedule', rotate: 0, location: 'AVAB - main lobby' }
