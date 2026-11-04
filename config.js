@@ -283,9 +283,19 @@ var SCHEDULES = {
      Builder; this sign did not exist before.
 
      THREE decks, one per meal, each with 31 slides in day order. The screen
-     switches between them at the times in "from" below. The last meal of the
-     day carries through midnight, so the board shows dinner overnight rather
-     than going blank.
+     switches between them at the times in "from" below.
+
+     Those times are when the BOARD CHANGES, not when food is served. Each
+     meal goes up as the previous service ends, so the screen always shows
+     the meal coming next rather than the one just eaten:
+
+       AVAH service:  breakfast 7:30-9:30, lunch 11:30-13:30, dinner 16:30-18:30
+       Board changes: breakfast 00:00,     lunch 09:30,       dinner 13:30
+
+     Breakfast starting at midnight is deliberate. The last meal of the day
+     otherwise carries through to the first, which would mean showing the new
+     day's dinner in the small hours; this way the overnight board shows the
+     breakfast that is actually coming.
 
      LANDSCAPE. The AVAH TV is mounted horizontally, unlike every other
      dietary screen, so these decks are 13.33 x 7.5 inches rather than
@@ -304,7 +314,7 @@ var SCHEDULES = {
     label: 'AVAH Dietary Menu',
     hold: true,
     meals: [
-      { from: '06:00',   // Breakfast
+      { from: '00:00',   // Breakfast
         deck: '2PACX-1vR2xJt4xaFJpLwMoXfpyz3PoAwYFIcgjsZn0qwMwINXevIHmoNt_F6o_DCAr0hQkrm9ARCBD2eBcoSl',
         slides: [
           null,
@@ -341,7 +351,7 @@ var SCHEDULES = {
           'h4ef40e84ae9024d_0_92'  // 31st
         ] },
 
-      { from: '10:30',   // Lunch
+      { from: '09:30',   // Lunch
         deck: '2PACX-1vSwC4k-D1bWx8srhDFIjhJBHSBU342hHIVzDvMvq9fYXm4vIbNzCQgdn1dX-UkTDTXiFDh8XxwEkBU1',
         slides: [
           null,
@@ -378,7 +388,7 @@ var SCHEDULES = {
           'h4ef40e84ae9024d_0_92'  // 31st
         ] },
 
-      { from: '15:30',   // Dinner
+      { from: '13:30',   // Dinner
         deck: '2PACX-1vSIwRMxTSLTqMNtOX1TQ8_76dOOsvCwXVPBGK-PdVjcwvpDSHsyrB3j0vAgqTrV6WEYPJ2fqpdakfjX',
         slides: [
           null,
