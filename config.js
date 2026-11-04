@@ -220,12 +220,14 @@ var SCHEDULES = {
      different structure from the BCCB Dietary Menu, which uses 31 separate
      Slides files. The two buildings' menus are unrelated and independent.
 
-     Uses "slideCount" rather than a list of slide IDs: slide POSITION is the
-     day of month. Slide 1 is the 1st, slide 31 is the 31st. Nothing to keep in
-     sync, and it survives slides being edited.
+     Each day names its slide by object ID. Position-based targeting was tried
+     and picked the wrong days: converting the deck from PowerPoint preserved
+     the original object ids rather than renumbering them p1..p31, so position
+     and id do not line up.
 
-     IMPORTANT: slide order is load-bearing. Reordering slides in this deck
-     silently shifts every day after the one that moved.
+     Because each day names its slide explicitly, reordering slides here is
+     harmless. Deleting and recreating one is not — its id changes and that
+     day falls back to the 1st.
 
      History worth knowing: the original deck was an uploaded PowerPoint
      (.pptx) file. Google's embed viewer rendered it letterboxed and rotated
@@ -273,6 +275,145 @@ var SCHEDULES = {
       'p23',               // 29th
       'p24',               // 30th
       'p25'                // 31st
+    ]
+  }
+
+  /* -------------------------------------------------------------------------
+     AVAH Dietary Menu — new, built November 2026. Not migrated from Sign
+     Builder; this sign did not exist before.
+
+     THREE decks, one per meal, each with 31 slides in day order. The screen
+     switches between them at the times in "from" below. The last meal of the
+     day carries through midnight, so the board shows dinner overnight rather
+     than going blank.
+
+     LANDSCAPE. The AVAH TV is mounted horizontally, unlike every other
+     dietary screen, so these decks are 13.33 x 7.5 inches rather than
+     portrait. Their content is not interchangeable with the other buildings'.
+
+     Staff do not edit these decks directly. They submit through the "Submit a
+     Menu" Google Form, and an Apps Script drops the image onto the right
+     slide. That script also regenerates this block — see generateConfig() in
+     it if slides are ever added or removed.
+
+     The three decks share the same slide ids because decks 2 and 3 were made
+     with File > Make a copy, which preserves them. That is harmless: it is
+     the deck plus the slide together that identifies a menu.
+     ------------------------------------------------------------------------- */
+  ,'avah-dietary': {
+    label: 'AVAH Dietary Menu',
+    hold: true,
+    meals: [
+      { from: '06:00',   // Breakfast
+        deck: '2PACX-1vR2xJt4xaFJpLwMoXfpyz3PoAwYFIcgjsZn0qwMwINXevIHmoNt_F6o_DCAr0hQkrm9ARCBD2eBcoSl',
+        slides: [
+          null,
+          'p',                     // 1st
+          'h4ef40e84ae9024d_0_5',  // 2nd
+          'h4ef40e84ae9024d_0_8',  // 3rd
+          'h4ef40e84ae9024d_0_11', // 4th
+          'h4ef40e84ae9024d_0_14', // 5th
+          'h4ef40e84ae9024d_0_17', // 6th
+          'h4ef40e84ae9024d_0_20', // 7th
+          'h4ef40e84ae9024d_0_23', // 8th
+          'h4ef40e84ae9024d_0_26', // 9th
+          'h4ef40e84ae9024d_0_29', // 10th
+          'h4ef40e84ae9024d_0_32', // 11th
+          'h4ef40e84ae9024d_0_35', // 12th
+          'h4ef40e84ae9024d_0_38', // 13th
+          'h4ef40e84ae9024d_0_41', // 14th
+          'h4ef40e84ae9024d_0_44', // 15th
+          'h4ef40e84ae9024d_0_47', // 16th
+          'h4ef40e84ae9024d_0_50', // 17th
+          'h4ef40e84ae9024d_0_53', // 18th
+          'h4ef40e84ae9024d_0_56', // 19th
+          'h4ef40e84ae9024d_0_59', // 20th
+          'h4ef40e84ae9024d_0_62', // 21st
+          'h4ef40e84ae9024d_0_65', // 22nd
+          'h4ef40e84ae9024d_0_68', // 23rd
+          'h4ef40e84ae9024d_0_71', // 24th
+          'h4ef40e84ae9024d_0_74', // 25th
+          'h4ef40e84ae9024d_0_77', // 26th
+          'h4ef40e84ae9024d_0_80', // 27th
+          'h4ef40e84ae9024d_0_83', // 28th
+          'h4ef40e84ae9024d_0_86', // 29th
+          'h4ef40e84ae9024d_0_89', // 30th
+          'h4ef40e84ae9024d_0_92'  // 31st
+        ] },
+
+      { from: '10:30',   // Lunch
+        deck: '2PACX-1vSwC4k-D1bWx8srhDFIjhJBHSBU342hHIVzDvMvq9fYXm4vIbNzCQgdn1dX-UkTDTXiFDh8XxwEkBU1',
+        slides: [
+          null,
+          'p',                     // 1st
+          'h4ef40e84ae9024d_0_5',  // 2nd
+          'h4ef40e84ae9024d_0_8',  // 3rd
+          'h4ef40e84ae9024d_0_11', // 4th
+          'h4ef40e84ae9024d_0_14', // 5th
+          'h4ef40e84ae9024d_0_17', // 6th
+          'h4ef40e84ae9024d_0_20', // 7th
+          'h4ef40e84ae9024d_0_23', // 8th
+          'h4ef40e84ae9024d_0_26', // 9th
+          'h4ef40e84ae9024d_0_29', // 10th
+          'h4ef40e84ae9024d_0_32', // 11th
+          'h4ef40e84ae9024d_0_35', // 12th
+          'h4ef40e84ae9024d_0_38', // 13th
+          'h4ef40e84ae9024d_0_41', // 14th
+          'h4ef40e84ae9024d_0_44', // 15th
+          'h4ef40e84ae9024d_0_47', // 16th
+          'h4ef40e84ae9024d_0_50', // 17th
+          'h4ef40e84ae9024d_0_53', // 18th
+          'h4ef40e84ae9024d_0_56', // 19th
+          'h4ef40e84ae9024d_0_59', // 20th
+          'h4ef40e84ae9024d_0_62', // 21st
+          'h4ef40e84ae9024d_0_65', // 22nd
+          'h4ef40e84ae9024d_0_68', // 23rd
+          'h4ef40e84ae9024d_0_71', // 24th
+          'h4ef40e84ae9024d_0_74', // 25th
+          'h4ef40e84ae9024d_0_77', // 26th
+          'h4ef40e84ae9024d_0_80', // 27th
+          'h4ef40e84ae9024d_0_83', // 28th
+          'h4ef40e84ae9024d_0_86', // 29th
+          'h4ef40e84ae9024d_0_89', // 30th
+          'h4ef40e84ae9024d_0_92'  // 31st
+        ] },
+
+      { from: '15:30',   // Dinner
+        deck: '2PACX-1vSIwRMxTSLTqMNtOX1TQ8_76dOOsvCwXVPBGK-PdVjcwvpDSHsyrB3j0vAgqTrV6WEYPJ2fqpdakfjX',
+        slides: [
+          null,
+          'p',                     // 1st
+          'h4ef40e84ae9024d_0_5',  // 2nd
+          'h4ef40e84ae9024d_0_8',  // 3rd
+          'h4ef40e84ae9024d_0_11', // 4th
+          'h4ef40e84ae9024d_0_14', // 5th
+          'h4ef40e84ae9024d_0_17', // 6th
+          'h4ef40e84ae9024d_0_20', // 7th
+          'h4ef40e84ae9024d_0_23', // 8th
+          'h4ef40e84ae9024d_0_26', // 9th
+          'h4ef40e84ae9024d_0_29', // 10th
+          'h4ef40e84ae9024d_0_32', // 11th
+          'h4ef40e84ae9024d_0_35', // 12th
+          'h4ef40e84ae9024d_0_38', // 13th
+          'h4ef40e84ae9024d_0_41', // 14th
+          'h4ef40e84ae9024d_0_44', // 15th
+          'h4ef40e84ae9024d_0_47', // 16th
+          'h4ef40e84ae9024d_0_50', // 17th
+          'h4ef40e84ae9024d_0_53', // 18th
+          'h4ef40e84ae9024d_0_56', // 19th
+          'h4ef40e84ae9024d_0_59', // 20th
+          'h4ef40e84ae9024d_0_62', // 21st
+          'h4ef40e84ae9024d_0_65', // 22nd
+          'h4ef40e84ae9024d_0_68', // 23rd
+          'h4ef40e84ae9024d_0_71', // 24th
+          'h4ef40e84ae9024d_0_74', // 25th
+          'h4ef40e84ae9024d_0_77', // 26th
+          'h4ef40e84ae9024d_0_80', // 27th
+          'h4ef40e84ae9024d_0_83', // 28th
+          'h4ef40e84ae9024d_0_86', // 29th
+          'h4ef40e84ae9024d_0_89', // 30th
+          'h4ef40e84ae9024d_0_92'  // 31st
+        ] }
     ]
   }
 
@@ -356,7 +497,9 @@ var DISPLAYS = {
   'bcch-breakroom': { schedule: 'bcch-breakroom', rotate: 0, location: 'BCCH - employee breakroom' },
   'avab-activities': { schedule: 'avab-activities', rotate: 0, location: 'AVAB - activities schedule' },
    'bcch-dietary': { schedule: 'bcch-dietary', rotate: 0, location: 'BCCH - dietary menu' },
-  'bcch-dietary-2': { schedule: 'bcch-dietary', rotate: 90, location: 'BCCH - dietary menu, second screen' }
+  'bcch-dietary-2': { schedule: 'bcch-dietary', rotate: 90, location: 'BCCH - dietary menu, second screen' },
+
+  'avah-dietary':   { schedule: 'avah-dietary', rotate: 0, location: 'AVAH - dietary menu (landscape)' }
 
   /* Add the remaining screens here, for example:
   ,'avab-lobby':    { schedule: 'some-schedule', rotate: 0, location: 'AVAB - main lobby' }

@@ -10,11 +10,12 @@
   You should not need to edit this file. All content lives in config.js.
 
   Each kiosk points at this page with its display ID:
-    https://YOURORG.github.io/signage/?id=bldg-a-dining
+    https://bshcrepo.github.io/signage/?id=bccb-breakroom
 
-  The page looks up that display's schedule, picks the deck for today's day
-  of month, and rolls over on its own at midnight. Source decks in Drive are
-  never modified and stay shared with any other displays that use them.
+  The page looks up that display's schedule, picks the content for today's day
+  of month (and, where a schedule defines meal times, for the current time of
+  day), and rolls over on its own. Source decks in Drive are never modified
+  and stay shared with any other displays that use them.
 
   Screen rotation is handled here rather than by device policy, because
   ChromeOS removed the kiosk screen rotation setting along with Chrome App
@@ -37,11 +38,19 @@
     transform-origin: 0 0;
   }
 
-  #stage iframe {
+  #stage iframe,
+  #stage img {
     display: block;
     width: 100%;
     height: 100%;
     border: 0;
+  }
+
+  /* Menu images are whole designed pages, so show the entire thing rather
+     than cropping it. Any leftover edge stays black. */
+  #stage img {
+    object-fit: contain;
+    background: #000;
   }
 
   /* Upright. */
@@ -91,6 +100,7 @@
 
 <div id="stage" class="rot-0">
   <iframe id="deck" allowfullscreen title="Signage content"></iframe>
+  <img id="pic" alt="" style="display:none">
 </div>
 <div id="message"></div>
 
@@ -103,6 +113,7 @@
 
   var stage = document.getElementById('stage');
   var frame = document.getElementById('deck');
+  var pic = document.getElementById('pic');
   var message = document.getElementById('message');
   var currentKey = null;
 
@@ -117,10 +128,77 @@
     return match ? decodeURIComponent(match[1]) : DEFAULT_DISPLAY;
   }
 
+  /**
+   * For a schedule with meal times, returns whichever meal is current.
+   *
+   * Meals are listed in config.js in clock order, each with a "from" time in
+   * 24-hour HH:MM. A meal shows from its own "from" until the next one starts.
+   * The last meal of the day carries through midnight until the first one
+   * begins, so an overnight screen keeps showing dinner rather than going
+   * blank.
+   *
+   * Returns null for schedules that have no meal times, which is most of them.
+   */
+  function activeMeal(schedule) {
+    if (!schedule.meals || !schedule.meals.length) return null;
+
+    var now = new Date();
+    var minutesNow = now.getHours() * 60 + now.getMinutes();
+
+    // Default to the last meal, which covers the overnight window.
+    var chosen = schedule.meals[schedule.meals.length - 1];
+
+    for (var i = 0; i < schedule.meals.length; i++) {
+      var meal = schedule.meals[i];
+      var parts = String(meal.from || '00:00').split(':');
+      var startMinutes = (parseInt(parts[0], 10) || 0) * 60 +
+                         (parseInt(parts[1], 10) || 0);
+      if (minutesNow >= startMinutes) chosen = meal;
+    }
+
+    return chosen;
+  }
+
+  /**
+   * Flattens a schedule down to the one set of content to show right now.
+   * For a meal-based schedule that is the current meal's content; for every
+   * other schedule it is the schedule itself, unchanged.
+   */
+  function resolveSchedule(schedule) {
+    var meal = activeMeal(schedule);
+    if (!meal) return schedule;
+
+    return {
+      hold:       (meal.hold !== undefined) ? meal.hold : schedule.hold,
+      delayMs:    meal.delayMs || schedule.delayMs,
+      deck:       meal.deck,
+      slides:     meal.slides,
+      slideCount: meal.slideCount,
+      static:     meal.static,
+      decks:      meal.decks,
+      images:     meal.images,
+      ext:        meal.ext || schedule.ext
+    };
+  }
+
+  function pad2(n) {
+    return (n < 10 ? '0' : '') + n;
+  }
+
   function embedUrl(schedule, day) {
     var base = 'https://docs.google.com/presentation/d/e/';
 
-    // Types 3 and 4: one deck, a specific slide per day, held static.
+    // A folder of image files, one per day of month, named 01..31 plus an
+    // extension. Nothing to list in config.js — the filename IS the schedule.
+    // Paths are relative to this page, so "menus/avah/lunch/" resolves to
+    // https://YOURORG.github.io/signage/menus/avah/lunch/05.png
+    if (schedule.images) {
+      var dir = schedule.images;
+      if (dir.charAt(dir.length - 1) !== '/') dir += '/';
+      return 'image:' + dir + pad2(day) + '.' + (schedule.ext || 'png');
+    }
+
+    // One deck, a specific slide per day, held static.
     //
     // Must use /embed. Google sends X-Frame-Options on /pub, so /pub cannot be
     // iframed at all — it fails with "refused to connect". Sign Builder loaded
@@ -147,9 +225,9 @@
              '#slide=id.' + anchor;
     }
 
-    // Type 2: one deck, looping all day, every day.
-    // Type 1: a different deck each day.
-    var deckId = schedule.static || (schedule.decks && (schedule.decks[day] || schedule.decks[1]));
+    // One deck looping all day, or a different deck each day.
+    var deckId = schedule.static ||
+                 (schedule.decks && (schedule.decks[day] || schedule.decks[1]));
     if (!deckId) return null;
 
     if (schedule.hold) {
@@ -183,7 +261,7 @@
     }
 
     var day = new Date().getDate();
-    var url = embedUrl(schedule, day);
+    var url = embedUrl(resolveSchedule(schedule), day);
 
     if (!url) {
       fail('No content configured for day ' + day + ' of "' +
@@ -200,12 +278,28 @@
     message.style.display = 'none';
     stage.style.display = 'block';
     applyRotation(display.rotate || 0);
-    frame.src = url;
+
+    if (url.indexOf('image:') === 0) {
+      var src = url.slice(6);
+      frame.style.display = 'none';
+      frame.src = 'about:blank';
+      pic.style.display = 'block';
+      pic.onerror = function () {
+        fail('No menu image found for day ' + day + ' at "' + src + '".');
+      };
+      pic.src = src;
+    } else {
+      pic.style.display = 'none';
+      pic.removeAttribute('src');
+      frame.style.display = 'block';
+      frame.src = url;
+    }
   }
 
   render();
 
-  // Rolls the day over at midnight without needing a reboot.
+  // Runs every minute. Rolls the day over at midnight and switches between
+  // breakfast, lunch and dinner at their configured times, with no reboot.
   setInterval(render, 60000);
 
   // Hard reload at 3:05am to clear any stale Slides cache and pick up
