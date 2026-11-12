@@ -31,11 +31,29 @@
     overflow: hidden;
   }
 
+  :root {
+    /* Height of the grey Google Slides player bar (slide counter, arrows,
+       "Google Slides" badge) that sits along the bottom of an /embed frame.
+       Measured at roughly 18px on a 1920x1080 kiosk; 28 leaves headroom.
+
+       The iframe is made this much TALLER than the screen and the overflow
+       is clipped, so the bar falls past the bottom edge and never shows.
+       This also removes the black bars down the left and right: Google fits
+       the slide into the space above its player bar, so on a 16:9 screen a
+       16:9 slide was being shrunk to fit a slightly-short box. With the bar
+       pushed off-screen the slide fills the panel edge to edge.
+
+       If a sliver of grey ever reappears, raise this a few pixels. If the
+       very bottom of the slide looks clipped, lower it. */
+    --player-bar: 28px;
+  }
+
   #stage {
     position: absolute;
     top: 0;
     left: 0;
     transform-origin: 0 0;
+    overflow: hidden;     /* clips the player bar away */
   }
 
   #stage iframe,
@@ -44,6 +62,10 @@
     width: 100%;
     height: 100%;
     border: 0;
+  }
+
+  #stage iframe {
+    height: calc(100% + var(--player-bar));
   }
 
   /* Menu images are whole designed pages, so show the entire thing rather
